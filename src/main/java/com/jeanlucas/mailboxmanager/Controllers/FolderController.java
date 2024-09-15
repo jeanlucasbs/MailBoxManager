@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/mailboxes")
 public class FolderController {
@@ -19,5 +21,10 @@ public class FolderController {
     @PostMapping(value = "{mailbox}/folders" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FolderModel> createFolder(@PathVariable("mailbox") String mailbox, @RequestBody FolderDTO folderDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(folderService.createFolder(mailbox, folderDTO));
+    }
+
+    @GetMapping("/{mailbox}/folders")
+    public ResponseEntity<List<FolderDTO>> getFoldersByMainBox(@PathVariable("mailbox") String mainBox) {
+        return ResponseEntity.ok(folderService.getFoldersByMainBox(mainBox));
     }
 }

@@ -4,7 +4,11 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MessageDTO {
 
     private int idt;
@@ -22,4 +26,12 @@ public class MessageDTO {
     private LocalDateTime sendAt;
 
     private String folder;
+
+    public MessageDTO(int idt, String sender, String subject, LocalDateTime sendAt, boolean read) {
+        this.idt = idt;
+        this.sender = sender;
+        this.subject = subject;
+        this.sendAt = sendAt;
+        this.read = read;
+    }
 }

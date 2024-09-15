@@ -11,6 +11,11 @@ import com.jeanlucas.mailboxmanager.Repositories.MailBoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.jeanlucas.mailboxmanager.utils.ValidarEntrada.isValidFolderName;
+
 @Service
 public class FolderService {
 
@@ -45,7 +50,14 @@ public class FolderService {
         return folderRepository.save(folder);
     }
 
-    private boolean isValidFolderName(String name) {
-        return name != null && name.matches("[a-zA-Z0-9_-]{1,100}");
+    public List<FolderDTO> getFoldersByMainBox(String mailBox) {
+        MailBoxModel mailBoxModel = mailBoxRepository.findByName(mailBox);
+        if(mailBoxModel == null){
+            throw new ResourceNotFoundException("Caixa de email não encontrada.");
+        }
+
+        List<FolderModel> folders = folderRepository.findByMailbox_Name(mailBox);
+        return folders.stream().map(folder -> new FolderDTO(folder.getIdt(), folder.getName())).collect(Collectors.toList());
     }
+
 }

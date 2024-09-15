@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/mailboxes")
 public class MessageController {
@@ -37,5 +39,18 @@ public class MessageController {
         }
         messageService.updateMessageReadStatus(mailBoxName, folderIdt, messageIdt, messageDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{mailbox}/folders/{folderIdt}/messages", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MessageDTO>> getFoldersByMainBoxAndFolder(@PathVariable("mailbox") String mailBoxName,
+                                                                         @PathVariable("folderIdt") String folderName){
+        return ResponseEntity.ok(messageService.getFoldersByMainBoxAndFolder(mailBoxName, folderName));
+    }
+
+    @GetMapping(value = "/{mailbox}/folders/{folderIdt}/messages/{messageIdt}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MessageDTO> getMessageDetail(@PathVariable("mailbox") String mailBoxName,
+                                                       @PathVariable("folderIdt") String folderName,
+                                                       @PathVariable("messageIdt") int messageIdt){
+        return ResponseEntity.ok(messageService.getMessageDetail(mailBoxName, folderName, messageIdt));
     }
 }

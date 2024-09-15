@@ -1,8 +1,11 @@
 package com.jeanlucas.mailboxmanager.DTOs;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class FolderDTO {
 
     private int idt;

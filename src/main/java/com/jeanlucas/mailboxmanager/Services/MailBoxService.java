@@ -5,13 +5,13 @@ import com.jeanlucas.mailboxmanager.Exception.InvalidNameException;
 import com.jeanlucas.mailboxmanager.Exception.ResourceAlreadyExistsException;
 import com.jeanlucas.mailboxmanager.Models.FolderModel;
 import com.jeanlucas.mailboxmanager.Models.MailBoxModel;
-import com.jeanlucas.mailboxmanager.Repositories.FolderRepository;
 import com.jeanlucas.mailboxmanager.Repositories.MailBoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.jeanlucas.mailboxmanager.utils.ValidarEntrada.isValidEmail;
 
@@ -20,9 +20,6 @@ public class MailBoxService {
 
     @Autowired
     private MailBoxRepository mailBoxRepository;
-
-    @Autowired
-    private FolderRepository folderRepository;
 
     public MailBoxModel createMailBox(MailBoxDTO mailBoxDTO) {
         if(!isValidEmail(mailBoxDTO.getName())){
@@ -56,4 +53,39 @@ public class MailBoxService {
 
         return mailBoxRepository.save(mailBox);
     }
+
+    public List<MailBoxDTO> getAllMainBoxes() {
+        List<MailBoxModel> mailBoxesModels = mailBoxRepository.findAll();
+        return mailBoxesModels.stream().map(mailBox -> new MailBoxDTO(mailBox.getName())).collect(Collectors.toList());
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
