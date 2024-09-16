@@ -57,11 +57,8 @@ public class MessageService {
             throw new InvalidSubjectException("O assunto deve ter no máximo 50 caracteres.");
         }
 
-        MessageModel message = new MessageModel();
+        MessageModel message = mapper.toModel(messageDTO);
         message.setSender(mailBoxName);
-        message.setRecipient(messageDTO.getRecipient());
-        message.setSubject(messageDTO.getSubject());
-        message.setBody(messageDTO.getBody());
         message.setRead(true);
         message.setSendAt(LocalDateTime.now());
         message.setFolder(sentFolder);
@@ -194,6 +191,4 @@ public class MessageService {
 
         return mapper.toDTO(message);
     }
-
-
 }

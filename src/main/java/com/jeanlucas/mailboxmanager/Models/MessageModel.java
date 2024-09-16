@@ -40,5 +40,4 @@ public class MessageModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "folder_idt", referencedColumnName = "idt", nullable = false)
     private FolderModel folder;
-
 }
