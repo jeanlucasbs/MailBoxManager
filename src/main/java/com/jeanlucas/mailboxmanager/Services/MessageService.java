@@ -1,6 +1,7 @@
 package com.jeanlucas.mailboxmanager.Services;
 
 import com.jeanlucas.mailboxmanager.DTOs.MessageDTO;
+import com.jeanlucas.mailboxmanager.Exception.InvalidMailboxException;
 import com.jeanlucas.mailboxmanager.Exception.InvalidNameException;
 import com.jeanlucas.mailboxmanager.Exception.InvalidSubjectException;
 import com.jeanlucas.mailboxmanager.Exception.ResourceNotFoundException;
@@ -38,8 +39,11 @@ public class MessageService {
     private MessageMapper mapper;
 
     public void sendMessage(String mailBoxName, MessageDTO messageDTO){
+        if(!isValidEmail(mailBoxName)){
+            throw new InvalidMailboxException("Nome da caixa inválido.");
+        }
 
-        if(!isValidEmail(mailBoxName) || !isValidEmail(messageDTO.getRecipient())){
+        if(!isValidEmail(messageDTO.getRecipient())){
             throw new InvalidNameException("Formato de email inválido.");
         }
 
@@ -68,7 +72,11 @@ public class MessageService {
 
     public void saveReceiveMesssage(String mailBoxName, MessageDTO messageDTO){
 
-        if(!isValidEmail(mailBoxName) || !isValidEmail(messageDTO.getSender())){
+        if(!isValidEmail(mailBoxName)){
+            throw new InvalidMailboxException("Nome da caixa inválido.");
+        }
+
+        if(!isValidEmail(messageDTO.getSender())){
             throw new InvalidNameException("Formato de email inválido.");
         }
 
@@ -103,7 +111,7 @@ public class MessageService {
 
     public void updateMessageReadStatus(String mailBoxName, int folderIdt, int messageIdt, MessageDTO messageDTO){
         if(!isValidEmail(mailBoxName)){
-            throw new InvalidNameException("Formato de email inválido.");
+            throw new InvalidNameException("Nome da caixa inválido.");
         }
 
         MailBoxModel mailBox = mailBoxRepository.findByName(mailBoxName);
@@ -125,7 +133,7 @@ public class MessageService {
 
     public List<MessageDTO> getMessagesByMainBoxAndFolder(String mailBoxName, String folderName){
         if(!isValidEmail(mailBoxName)){
-            throw new InvalidNameException("Formato de email inválido.");
+            throw new InvalidNameException("Nome da caixa inválido.");
         }
 
         MailBoxModel mailBox = mailBoxRepository.findByName(mailBoxName);
@@ -150,7 +158,7 @@ public class MessageService {
 
     public Page<MessageDTO> getMessagesByMainBoxAndFolder(String mailBoxName, String folderName, Pageable pageable){
         if(!isValidEmail(mailBoxName)){
-            throw new InvalidNameException("Formato de email inválido.");
+            throw new InvalidNameException("Nome da caixa inválido.");
         }
 
         MailBoxModel mailBox = mailBoxRepository.findByName(mailBoxName);
@@ -173,7 +181,7 @@ public class MessageService {
 
     public MessageDTO getMessageDetail(String mailBoxName, String folderName, int messageIdt){
         if (!isValidEmail(mailBoxName)){
-            throw new InvalidNameException("Formato de email inválido.");
+            throw new InvalidNameException("Nome da caixa inválido.");
         }
 
         MailBoxModel mailBox = mailBoxRepository.findByName(mailBoxName);

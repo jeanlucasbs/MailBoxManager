@@ -25,7 +25,7 @@ public class MailBoxService {
 
     public MailBoxModel createMailBox(MailBoxDTO mailBoxDTO) {
         if(!isValidEmail(mailBoxDTO.getName())){
-            throw new InvalidNameException("Formato de email inválido.");
+            throw new InvalidNameException("Nome da caixa inválido.");
         }
 
         MailBoxModel mailBoxModel = mailBoxRepository.findByName(mailBoxDTO.getName());

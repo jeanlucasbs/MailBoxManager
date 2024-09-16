@@ -39,7 +39,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(InvalidNameException.class)
-    public final ResponseEntity<ExceptionResponse> handleInvalidMailBoxNameException(InvalidNameException ex, WebRequest request) {
+    public final ResponseEntity<ExceptionResponse> handleInvalidNameException(InvalidNameException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(), ex.getMessage(), request.getDescription(false)
+        );
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidMailboxException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidMailBoxNameException(InvalidMailboxException ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(), ex.getMessage(), request.getDescription(false)
         );

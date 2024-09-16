@@ -64,11 +64,24 @@ class CustomizedResponseEntityExceptionHandlerTest {
 
     @Test
     public void testHandleInvalidMailBoxNameException() {
-        InvalidNameException ex = new InvalidNameException("Formato de email inválido.");
+        InvalidMailboxException ex = new InvalidMailboxException("Nome da caixa inválido.");
         WebRequest request = mock(WebRequest.class);
         when(request.getDescription(false)).thenReturn("uri=/invalidMailboxName");
 
         ResponseEntity<ExceptionResponse> responseEntity = customizedResponseEntityExceptionHandler.handleInvalidMailBoxNameException(ex, request);
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        ExceptionResponse exceptionResponse = responseEntity.getBody();
+        assertNotNull(exceptionResponse);
+    }
+
+    @Test
+    public void testHandleInvalidNameException() {
+        InvalidNameException ex = new InvalidNameException("Formato de email inválido.");
+        WebRequest request = mock(WebRequest.class);
+        when(request.getDescription(false)).thenReturn("uri=/invalidMailboxName");
+
+        ResponseEntity<ExceptionResponse> responseEntity = customizedResponseEntityExceptionHandler.handleInvalidNameException(ex, request);
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         ExceptionResponse exceptionResponse = responseEntity.getBody();

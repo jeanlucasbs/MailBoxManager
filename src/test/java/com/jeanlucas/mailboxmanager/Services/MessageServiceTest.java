@@ -93,7 +93,7 @@ class MessageServiceTest {
 
     @Test
     void sendMessageInvalidName() {
-        messageDTO.setRecipient("invalid@Name");
+        messageDTO.setRecipient("invalid-name");
 
         InvalidNameException ex = assertThrows(InvalidNameException.class, () -> {
             messageService.sendMessage(mailBoxModel.getName(), messageDTO);
@@ -167,7 +167,7 @@ class MessageServiceTest {
 
     @Test
     void saveReceiveMesssageInvalidName() {
-        messageDTO.setSender("invalid@Name");
+        messageDTO.setSender("invalid");
 
         InvalidNameException ex = assertThrows(InvalidNameException.class, () -> {
             messageService.saveReceiveMesssage(mailBoxModel.getName(), messageDTO);
@@ -219,7 +219,7 @@ class MessageServiceTest {
             messageService.updateMessageReadStatus("test@example", folderModel.getIdt(), messageModel.getIdt(), messageDTO);
         });
 
-        assertEquals("Formato de email inválido.", ex.getMessage());
+        assertEquals("Nome da caixa inválido.", ex.getMessage());
     }
 
     @Test
@@ -253,7 +253,7 @@ class MessageServiceTest {
             messageService.getMessagesByMainBoxAndFolder(mailBoxModel.getName(), "SENT");
         });
 
-        assertEquals("Formato de email inválido.", ex.getMessage());
+        assertEquals("Nome da caixa inválido.", ex.getMessage());
     }
 
     @Test
@@ -354,7 +354,7 @@ class MessageServiceTest {
             messageService.getMessageDetail(mailBoxModel.getName(), "SENT", messageModel.getIdt());
         });
 
-        assertEquals("Formato de email inválido.", ex.getMessage());
+        assertEquals("Nome da caixa inválido.", ex.getMessage());
     }
 
     @Test
