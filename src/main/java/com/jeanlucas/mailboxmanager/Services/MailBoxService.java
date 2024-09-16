@@ -7,6 +7,8 @@ import com.jeanlucas.mailboxmanager.Models.FolderModel;
 import com.jeanlucas.mailboxmanager.Models.MailBoxModel;
 import com.jeanlucas.mailboxmanager.Repositories.MailBoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -26,9 +28,9 @@ public class MailBoxService {
             throw new InvalidNameException("Formato de email inválido.");
         }
 
-        MailBoxModel ExistsMailBox = mailBoxRepository.findByName(mailBoxDTO.getName());
+        MailBoxModel mailBoxModel = mailBoxRepository.findByName(mailBoxDTO.getName());
 
-        if(ExistsMailBox != null){
+        if(mailBoxModel != null){
             throw new ResourceAlreadyExistsException("Caixa de email já existe.");
         }
 
@@ -57,6 +59,10 @@ public class MailBoxService {
     public List<MailBoxDTO> getAllMainBoxes() {
         List<MailBoxModel> mailBoxesModels = mailBoxRepository.findAll();
         return mailBoxesModels.stream().map(mailBox -> new MailBoxDTO(mailBox.getName())).collect(Collectors.toList());
+    }
+
+    public Page<MailBoxDTO> getAllMainBoxes(Pageable pageable) {
+        return mailBoxRepository.findAll(pageable).map(mailBox -> new MailBoxDTO(mailBox.getName()));
     }
 }
 

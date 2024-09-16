@@ -33,5 +33,4 @@ public class FolderModel implements Serializable {
 
     @OneToMany(mappedBy = "folder",  cascade = CascadeType.ALL)
     private List<MessageModel> messages;
-
 }

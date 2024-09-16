@@ -8,6 +8,7 @@ class MailBoxManagerApplicationTests {
 
     @Test
     void contextLoads() {
+        MailBoxManagerApplication.main(new String[] {});
     }
 
 }

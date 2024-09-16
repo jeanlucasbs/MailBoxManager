@@ -12,6 +12,8 @@ import com.jeanlucas.mailboxmanager.Repositories.FolderRepository;
 import com.jeanlucas.mailboxmanager.Repositories.MailBoxRepository;
 import com.jeanlucas.mailboxmanager.Repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -124,7 +126,7 @@ public class MessageService {
         messageRepository.save(message);
     }
 
-    public List<MessageDTO> getFoldersByMainBoxAndFolder(String mailBoxName, String folderName){
+    public List<MessageDTO> getMessagesByMainBoxAndFolder(String mailBoxName, String folderName){
         if(!isValidEmail(mailBoxName)){
             throw new InvalidNameException("Formato de email inválido.");
         }
@@ -149,6 +151,29 @@ public class MessageService {
 
     }
 
+    public Page<MessageDTO> getMessagesByMainBoxAndFolder(String mailBoxName, String folderName, Pageable pageable){
+        if(!isValidEmail(mailBoxName)){
+            throw new InvalidNameException("Formato de email inválido.");
+        }
+
+        MailBoxModel mailBox = mailBoxRepository.findByName(mailBoxName);
+        if(mailBox == null){
+            throw new ResourceNotFoundException("Caixa de email não existe.");
+        }
+
+        FolderModel folder = folderRepository.findByName(folderName).orElse(null);
+        if (folder == null) {
+            throw new ResourceNotFoundException("Pasta não encontrada para a caixa de e-mail");
+        }
+
+        Page<MessageModel> messages = messageRepository.findByFolder_NameAndFolder_Mailbox_Name(folderName, mailBoxName, pageable);
+        return messages.map(message -> new MessageDTO(message.getIdt(),
+                message.getSender(),
+                message.getSubject(),
+                message.getSendAt(),
+                message.isRead()));
+    }
+
     public MessageDTO getMessageDetail(String mailBoxName, String folderName, int messageIdt){
         if (!isValidEmail(mailBoxName)){
             throw new InvalidNameException("Formato de email inválido.");
@@ -169,4 +194,6 @@ public class MessageService {
 
         return mapper.toDTO(message);
     }
+
+
 }

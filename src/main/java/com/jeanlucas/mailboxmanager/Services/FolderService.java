@@ -9,6 +9,8 @@ import com.jeanlucas.mailboxmanager.Models.MailBoxModel;
 import com.jeanlucas.mailboxmanager.Repositories.FolderRepository;
 import com.jeanlucas.mailboxmanager.Repositories.MailBoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,6 +60,14 @@ public class FolderService {
 
         List<FolderModel> folders = folderRepository.findByMailbox_Name(mailBox);
         return folders.stream().map(folder -> new FolderDTO(folder.getIdt(), folder.getName())).collect(Collectors.toList());
+    }
+
+    public Page<FolderDTO> getFoldersByMainBox(String mailBox, Pageable pageable) {
+        MailBoxModel mailBoxModel = mailBoxRepository.findByName(mailBox);
+        if(mailBoxModel == null){
+            throw new ResourceNotFoundException("Caixa de email não encontrada.");
+        }
+        return folderRepository.findByMailbox_Name(mailBox, pageable).map(folder -> new FolderDTO(folder.getIdt(), folder.getName()));
     }
 
 }

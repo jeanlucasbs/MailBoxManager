@@ -4,6 +4,9 @@ import com.jeanlucas.mailboxmanager.DTOs.FolderDTO;
 import com.jeanlucas.mailboxmanager.Models.FolderModel;
 import com.jeanlucas.mailboxmanager.Services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +15,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/mailboxes")
+@RequestMapping("/api")
 public class FolderController {
 
     @Autowired
     private FolderService folderService;
 
-    @PostMapping(value = "{mailbox}/folders" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v1/mailboxes/{mailbox}/folders" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FolderModel> createFolder(@PathVariable("mailbox") String mailbox, @RequestBody FolderDTO folderDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(folderService.createFolder(mailbox, folderDTO));
     }
 
-    @GetMapping("/{mailbox}/folders")
+    @GetMapping("/v1/mailboxes/{mailbox}/folders")
     public ResponseEntity<List<FolderDTO>> getFoldersByMainBox(@PathVariable("mailbox") String mainBox) {
         return ResponseEntity.ok(folderService.getFoldersByMainBox(mainBox));
+    }
+
+    @GetMapping("/v2/mailboxes/{mailbox}/folders")
+    public ResponseEntity<Page<FolderDTO>> getFoldersByMainBox(@PathVariable("mailbox") String mainBox,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<FolderDTO> folders = folderService.getFoldersByMainBox(mainBox, pageable);
+        return ResponseEntity.ok(folders);
     }
 }
