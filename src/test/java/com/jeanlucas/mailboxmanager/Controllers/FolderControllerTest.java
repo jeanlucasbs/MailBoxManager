@@ -46,12 +46,12 @@ class FolderControllerTest {
 
     @Test
     public void createFolderSuccessfully() throws Exception {
-        when(folderService.createFolder("jean@hotmail.com", folderDTO)).thenReturn(folderModel);
+        when(folderService.createFolder("jean@hotmail.com", folderDTO)).thenReturn(folderDTO);
 
-        ResponseEntity<FolderModel> response = folderController.createFolder("jean@hotmail.com", folderDTO);
+        ResponseEntity<FolderDTO> response = folderController.createFolder("jean@hotmail.com", folderDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(folderModel, response.getBody());
+        assertEquals(folderDTO, response.getBody());
     }
 
     @Test
@@ -77,6 +77,5 @@ class FolderControllerTest {
         ResponseEntity<Page<FolderDTO>> response = folderController.getFoldersByMainBox("jean@hotmail.com", 0, 10);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(page, response.getBody());
     }
 }

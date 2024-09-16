@@ -61,11 +61,10 @@ class FolderServiceTest {
         when(folderRepository.existsByNameAndMailboxIdt(folderDTO.getName(), mailBoxModel.getIdt())).thenReturn(false);
         when(folderRepository.save(any(FolderModel.class))).thenReturn(folderModel);
 
-        FolderModel result = folderService.createFolder("Test", folderDTO);
+        FolderDTO result = folderService.createFolder("Test", folderDTO);
 
         assertNotNull(result);
         assertEquals("NewFolder", result.getName());
-        assertEquals(mailBoxModel, result.getMailbox());
     }
 
     @Test

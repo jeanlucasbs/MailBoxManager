@@ -49,12 +49,12 @@ class MailBoxControllerTest {
 
     @Test
     void createMailBoxSuccessfully() {
-        when(mailBoxService.createMailBox(mailBoxDTO)).thenReturn(mailBoxModel);
+        when(mailBoxService.createMailBox(mailBoxDTO)).thenReturn(mailBoxDTO);
 
-        ResponseEntity<MailBoxModel> response = mailBoxController.createMailBox(mailBoxDTO);
+        ResponseEntity<MailBoxDTO> response = mailBoxController.createMailBox(mailBoxDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(mailBoxModel, response.getBody());
+        assertEquals(mailBoxDTO, response.getBody());
     }
 
     @Test

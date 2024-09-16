@@ -1,7 +1,6 @@
 package com.jeanlucas.mailboxmanager.Controllers;
 
 import com.jeanlucas.mailboxmanager.DTOs.MailBoxDTO;
-import com.jeanlucas.mailboxmanager.Models.MailBoxModel;
 import com.jeanlucas.mailboxmanager.Services.MailBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api")
@@ -22,13 +25,23 @@ public class MailBoxController {
     private MailBoxService mailBoxService;
 
     @PostMapping(value = "/v1/mailboxes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MailBoxModel> createMailBox(@RequestBody MailBoxDTO mailBoxDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mailBoxService.createMailBox(mailBoxDTO));
+    public ResponseEntity<MailBoxDTO> createMailBox(@RequestBody MailBoxDTO mailBoxDTO) {
+        MailBoxDTO createdMailBox = mailBoxService.createMailBox(mailBoxDTO);
+
+        createdMailBox.add(linkTo(methodOn(MailBoxController.class)
+                .createMailBox(mailBoxDTO)).withSelfRel());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMailBox);
     }
 
     @GetMapping("/v1/mailboxes")
     public ResponseEntity<List<MailBoxDTO>> getAllMainBoxes() {
-        return ResponseEntity.ok(mailBoxService.getAllMainBoxes());
+        List<MailBoxDTO> mailBoxes = mailBoxService.getAllMainBoxes();
+
+        List<MailBoxDTO> folderResources = mailBoxes.stream()
+                .map(folder -> folder.add(linkTo(methodOn(MailBoxController.class).getAllMainBoxes()).withSelfRel())
+                ).collect(Collectors.toList());
+
+        return ResponseEntity.ok(folderResources);
     }
 
     @GetMapping("/v2/mailboxes")

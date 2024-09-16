@@ -39,7 +39,9 @@ class MailBoxServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        mailBoxDTO = new MailBoxDTO(1, "teste@teste.com");
+        mailBoxDTO = new MailBoxDTO();
+        mailBoxDTO.setIdt(1);
+        mailBoxDTO.setName("teste@teste.com");
 
         mailBoxModel = new MailBoxModel();
         mailBoxModel.setIdt(1);
@@ -51,7 +53,7 @@ class MailBoxServiceTest {
         when(mailBoxRepository.findByName("teste@teste")).thenReturn(null);
         when(mailBoxRepository.save(any(MailBoxModel.class))).thenReturn(mailBoxModel);
 
-        MailBoxModel result = service.createMailBox(mailBoxDTO);
+        MailBoxDTO result = service.createMailBox(mailBoxDTO);
 
         assertNotNull(result);
         assertEquals(mailBoxDTO.getName(), result.getName());

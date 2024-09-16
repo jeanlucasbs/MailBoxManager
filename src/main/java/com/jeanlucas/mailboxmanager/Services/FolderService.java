@@ -27,7 +27,7 @@ public class FolderService {
     @Autowired
     private MailBoxRepository mailBoxRepository;
 
-    public FolderModel createFolder(String mailBoxName, FolderDTO folderDTO) {
+    public FolderDTO createFolder(String mailBoxName, FolderDTO folderDTO) {
 
         MailBoxModel mailBoxModel = mailBoxRepository.findByName(mailBoxName);
 
@@ -48,8 +48,13 @@ public class FolderService {
         FolderModel folder = new FolderModel();
         folder.setName(folderDTO.getName());
         folder.setMailbox(mailBoxModel);
+        folderRepository.save(folder);
 
-        return folderRepository.save(folder);
+        FolderDTO response = new FolderDTO();
+        response.setIdt(folder.getIdt());
+        response.setName(folder.getName());
+
+        return response;
     }
 
     public List<FolderDTO> getFoldersByMainBox(String mailBox) {
@@ -59,6 +64,7 @@ public class FolderService {
         }
 
         List<FolderModel> folders = folderRepository.findByMailbox_Name(mailBox);
+
         return folders.stream().map(folder -> new FolderDTO(folder.getIdt(), folder.getName())).collect(Collectors.toList());
     }
 

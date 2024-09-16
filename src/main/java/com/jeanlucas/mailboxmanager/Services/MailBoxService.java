@@ -1,5 +1,6 @@
 package com.jeanlucas.mailboxmanager.Services;
 
+import com.jeanlucas.mailboxmanager.DTOs.FolderDTO;
 import com.jeanlucas.mailboxmanager.DTOs.MailBoxDTO;
 import com.jeanlucas.mailboxmanager.Exception.InvalidNameException;
 import com.jeanlucas.mailboxmanager.Exception.ResourceAlreadyExistsException;
@@ -23,7 +24,7 @@ public class MailBoxService {
     @Autowired
     private MailBoxRepository mailBoxRepository;
 
-    public MailBoxModel createMailBox(MailBoxDTO mailBoxDTO) {
+    public MailBoxDTO createMailBox(MailBoxDTO mailBoxDTO) {
         if(!isValidEmail(mailBoxDTO.getName())){
             throw new InvalidNameException("Nome da caixa inválido.");
         }
@@ -53,7 +54,16 @@ public class MailBoxService {
         List<FolderModel> folders = Arrays.asList(inbox, junk, sent);
         mailBox.setFolders(folders);
 
-        return mailBoxRepository.save(mailBox);
+        mailBoxRepository.save(mailBox);
+
+        MailBoxDTO response = new MailBoxDTO();
+        response.setIdt(mailBox.getIdt());
+        response.setName(mailBoxDTO.getName());
+        response.setFolders(folders.stream()
+                .map(folder -> new FolderDTO(folder.getIdt(), folder.getName()))
+                .collect(Collectors.toList()));
+
+        return response;
     }
 
     public List<MailBoxDTO> getAllMainBoxes() {
