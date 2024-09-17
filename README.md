@@ -33,7 +33,7 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 
 - Código disponível para cloanagem:
 
-   > https://github.com/jeanlucasbs/MailBoxManager
+   > https://github.com/jeanlucasbs/MailBoxManager.git
   
 - Logo após baixe uma IDE de sua preferência e instale-o em seu computador.
 - Importe o projeto Maven.
