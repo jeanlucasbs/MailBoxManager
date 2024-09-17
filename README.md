@@ -63,7 +63,7 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 2) No repositório do projeto há um arquivo chamado *test-uol.postman_collection.json* que pode ser utilizado para importar no Postaman com todos os endpoints configurados.
      
    
-## Containirização do projeto
+## Conteinerização do projeto
   
 Dockerfile
 
