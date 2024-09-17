@@ -12,10 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api")
@@ -26,22 +22,12 @@ public class MailBoxController {
 
     @PostMapping(value = "/v1/mailboxes", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MailBoxDTO> createMailBox(@RequestBody MailBoxDTO mailBoxDTO) {
-        MailBoxDTO createdMailBox = mailBoxService.createMailBox(mailBoxDTO);
-
-        createdMailBox.add(linkTo(methodOn(MailBoxController.class)
-                .createMailBox(mailBoxDTO)).withSelfRel());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMailBox);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mailBoxService.createMailBox(mailBoxDTO));
     }
 
     @GetMapping("/v1/mailboxes")
     public ResponseEntity<List<MailBoxDTO>> getAllMainBoxes() {
-        List<MailBoxDTO> mailBoxes = mailBoxService.getAllMainBoxes();
-
-        List<MailBoxDTO> folderResources = mailBoxes.stream()
-                .map(folder -> folder.add(linkTo(methodOn(MailBoxController.class).getAllMainBoxes()).withSelfRel())
-                ).collect(Collectors.toList());
-
-        return ResponseEntity.ok(folderResources);
+        return ResponseEntity.ok(mailBoxService.getAllMainBoxes());
     }
 
     @GetMapping("/v2/mailboxes")

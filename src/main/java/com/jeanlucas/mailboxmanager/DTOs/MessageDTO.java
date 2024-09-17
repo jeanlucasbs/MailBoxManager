@@ -1,7 +1,6 @@
 package com.jeanlucas.mailboxmanager.DTOs;
 
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageDTO extends RepresentationModel<MessageDTO> {
+public class MessageDTO {
 
     private int idt;
 

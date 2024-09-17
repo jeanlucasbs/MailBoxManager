@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "f81bc941-8eec-4003-9678-98759a180816",
+		"name": "test-uol",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26571634"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "CreateMainBox",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"name\": \"jean@hotmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/api/v1/mailboxes"
+					},
+					"response": []
+				},
+				{
+					"name": "CreateFolder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"name\": \"arquivos-de-testes\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/api/v1/mailboxes/0/folders"
+					},
+					"response": []
+				},
+				{
+					"name": "sendMessage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"recipient\": \"teste@dominio.com\",\r\n \"subject\": \"Assunto de teste\",\r\n \"body\": \"Corpo do e-mail de teste\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/send-message"
+					},
+					"response": []
+				},
+				{
+					"name": "saveReceiveMesssage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"sender\": \"teste@hotmail.com\",\r\n \"subject\": \"Assunto de teste\",\r\n \"body\": \"Corpo do e-mail de teste\",\r\n \"folder\": \"JUNK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/receive-message"
+					},
+					"response": []
+				},
+				{
+					"name": "updateMessageReadStatus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/1/1/read"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllMainBoxes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/api/v1/mailboxes"
+					},
+					"response": []
+				},
+				{
+					"name": "getFoldersByMainBox",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/folders"
+					},
+					"response": []
+				},
+				{
+					"name": "getMessagesByMainBoxAndFolder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/folders/JUNK/messages"
+					},
+					"response": []
+				},
+				{
+					"name": "getMessageDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/api/v1/mailboxes/jean@hotmail.com/folders/JUNK/messages/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v2",
+			"item": [
+				{
+					"name": "getAllMainBoxes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v2/mailboxes"
+					},
+					"response": []
+				},
+				{
+					"name": "getFoldersByMainBox",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getMessagesByMainBoxAndFolder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

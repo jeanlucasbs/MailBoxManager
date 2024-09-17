@@ -59,9 +59,6 @@ public class MailBoxService {
         MailBoxDTO response = new MailBoxDTO();
         response.setIdt(mailBox.getIdt());
         response.setName(mailBoxDTO.getName());
-        response.setFolders(folders.stream()
-                .map(folder -> new FolderDTO(folder.getIdt(), folder.getName()))
-                .collect(Collectors.toList()));
 
         return response;
     }

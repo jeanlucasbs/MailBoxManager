@@ -1,13 +1,15 @@
 package com.jeanlucas.mailboxmanager.DTOs;
 
-import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FolderDTO extends RepresentationModel<FolderDTO> {
+public class FolderDTO {
 
     private int idt;
 
