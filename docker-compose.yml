@@ -1,23 +1,5 @@
 version: '3.9'
 services:
-  db:
-    image: mysql:9.0.1
-    command: mysqld --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      TZ: America/Sao_Paulo
-      MYSQL_ROOT_PASSWORD: admin123
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: admin123
-      MYSQL_DATABASE: mailboxmanager
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_TCP_PORT: 3308
-    ports:
-      - 3308:3308
-    expose:
-      - 3308
-    networks:
-      - app-network
   mailboxmanager:
     image: jeanlucasb/mail-box-manager
     restart: always
@@ -27,14 +9,18 @@ services:
     working_dir: /MailBoxManager
     environment:
       TZ: America/Sao_Paulo
-      SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/mailboxmanager?useTimezone=true&serverTimezone=UTC
-      SPRING.DATASOURCE.USERNAME: root
-      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:mailBoxManager;DB_CLOSE_DELAY=-1
+      SPRING_DATASOURCE_DRIVER_CLASSNAME: org.h2.Driver
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_H2_CONSOLE_PATH: /h2-console
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
+      SPRING_H2_CONSOLE_ENABLED: true
+      SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS: true
+      SERVER_PORT: 8080
     ports:
       - 8080:8080
     command: mvn spring-boot:run
-    depends_on:
-      - db
     networks:
       - app-network
 networks:
