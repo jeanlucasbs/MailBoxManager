@@ -31,7 +31,7 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 
 ## Montagem do ambiente:
 
-- Código disponível para cloanagem:
+- Código disponível para clonagem:
 
    > https://github.com/jeanlucasbs/MailBoxManager.git
   
