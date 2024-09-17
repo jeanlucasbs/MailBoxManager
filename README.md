@@ -59,10 +59,23 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 - *Versão V2 os itens 6,7,8*
    - Foram adicionadas 3 endpoints para trabalhar com paginação. Este mecanismo permite dividir grandes volumes de dados em partes menores e mais gerenciáveis, facilitando o processamento e a exibição.
    - Isso melhora o desempenho da aplicação e a experiência do usuário ao fornecer apenas uma parte dos resultados por vez, geralmente com parâmetros como número da página e tamanho da página.
+
+   - `http://localhost:8080/api/v2/mailboxes` - Lista as caixas armazenadas.
+   - `http://localhost:8080/api/v2/mailboxes/{mailbox}/folders` - Lista as pastas de uma caixa.
+   - `http://localhost:8080/api/v2/mailboxes/{mailbox}/folders/{folderIdt}/messages` - Lista as mensagens de uma caixa e pasta.
+
    
 2) No repositório do projeto há um arquivo chamado *test-uol.postman_collection.json* que pode ser utilizado para importar no Postaman com todos os endpoints configurados.
      
+
+## Teste unitários
+
+   - Foi realizado a implementação dos testes unitários da API e que pode ser econtrado na pasta _src/test.
    
+## OpenAPI (Swagger)
+   - O OpenAPI, conhecido também como Swagger, foi utilizado para documentar a API. Ele permite gerar automaticamente a documentação a partir do código, fornecendo uma interface gráfica onde os endpoints podem ser testados diretamente.
+   - Isso facilita a compreensão da API, além de auxiliar desenvolvedores e consumidores no processo de integração com o sistema.
+
 ## Conteinerização do projeto
   
 Dockerfile
