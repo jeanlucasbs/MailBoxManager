@@ -13,14 +13,18 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 - Spring Boot Devtools
 
    - O DevTools foi selecionado por configurar automaticamente algumas propriedades úteis durante o desenvolvimento, além de monitorar o classpath para reiniciar automaticamente a aplicação sempre que houver alterações.
-   
+     
 - MySQL
    - O MySQL foi escolhido por ser um sistema de gerenciamento de banco de dados amplamente utilizado, oferecendo robustez, desempenho e escalabilidade.
    - Sua facilidade de integração com o Spring Data JPA, juntamente com o suporte a transações e a capacidade de manipular grandes volumes de dados de forma eficiente, foram fatores decisivos para a escolha.
+     
 - Lombok
    - O Lombok foi selecionado por sua capacidade de reduzir a verbosidade do código, gerando automaticamente métodos como getters, setters, construtores e outros, a partir de anotações simples.
-   - Isso economiza tempo e melhora a legibilidade do código, permitindo que os desenvolvedores se concentrem mais na lógica de negócios ao invés de escrever código repetitivo.    
-
+   - Isso economiza tempo e melhora a legibilidade do código, permitindo que os desenvolvedores se concentrem mais na lógica de negócios ao invés de escrever código repetitivo.
+     
+- JUnit
+   - O JUnit foi utilizado para realizar testes unitários na aplicação, permitindo validar o comportamento do código de forma automática.
+     
 ## Ferramentas adicionais:
 
 - Para realizar as requisições em formato JSON, foi utilizado o Postman, uma ferramenta popular para testes de APIs. [Postman](https://www.getpostman.com/apps).
