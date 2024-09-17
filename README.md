@@ -31,9 +31,8 @@ Esse repositório foi criado com o objetivo de desenvolver uma API RESTful que p
 
    > https://github.com/jeanlucasbs/MailBoxManager
   
-- Logo após baixe o Eclipse IDE for Java EE Developers neste link (https://www.eclipse.org/downloads/packages/release/kepler/r/eclipse-ide-java-ee-developers) e instale-o normalmente no seu computador.
+- Logo após baixe uma IDE de sua preferência e instale-o em seu computador.
 - Importe o projeto Maven.
-
 
 ## Como Executar o projeto:
 
