@@ -90,6 +90,14 @@ Dockerfile
 
 Docker Compose
 
-  - O Docker Compose foi empregado para orquestrar múltiplos contêineres em um ambiente de desenvolvimento ou produção. Foram criados um container da aplicação e outro do banco de dados.
-  - No repositório do projeto há o arquivo *docker-compose.yml*.
+  - O Docker Compose é empregado para orquestrar múltiplos contêineres em um ambiente de desenvolvimento ou produção.
+  - Para facilitar os testes da api e acesso a aplicação, foi configurado o banco de dados H2 Database, um banco de dados em memória, permitindo simular o ambiente de produção.
+  - No repositório do projeto, há o arquivo docker-compose.yml.
+  - Passos para rodar a aplicação no docker:
+     -  Para subir a aplicação com o docker compose é necessário estar dentro do diretório do projeto.
+     -  Abra o Prompt de comando e digite o seguinte comando:
+       ```bash
+       docker compose up -d --build
+  - Ao subir a aplicação, basta acessar o h2-console no browser na seguinte URL: http://localhost:8080/h2-console
+    
     
